@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
+import { AxiosError } from 'axios'
 
 import './SignUp.css'
 import zipcode from '@/config/zipcodes.ts'
@@ -90,20 +91,22 @@ export function SignUp() {
     reset,
     formState: { errors }
   } = useForm<SignUp>({
-    email: '',
-    password: '',
-    name: '',
-    confirm_password: '',
-    phone: '',
-    birthday_year: '1988',
-    birthday_month: '1',
-    birthday_day: '1',
-    address: {
-      city: '臺北市',
-      county: '中正區',
-      detail: ''
-    },
-    check: false
+    defaultValues: {
+      email: '',
+      password: '',
+      name: '',
+      confirm_password: '',
+      phone: '',
+      birthday_year: '1988',
+      birthday_month: '1',
+      birthday_day: '1',
+      address: {
+        city: '臺北市',
+        county: '中正區',
+        detail: ''
+      },
+      check: false
+    }
   })
 
   const signUpHandler = async (payload: SignUpAPI) => {
@@ -113,9 +116,12 @@ export function SignUp() {
       if (result) {
         return result.data
       }
-    } catch (error) {
-      console.log(error)
-      return error?.response?.data
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        return error?.response?.data
+      } else {
+        console.log('Unexpected error', error)
+      }
     } finally {
       setIsLoading(false)
     }

@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
+import { AxiosError } from 'axios'
 
 import './SignUp.css'
 import BG from '@/assets/images/Login_BG.png'
@@ -51,10 +52,12 @@ export function Forgot() {
     // reset,
     formState: { errors, touchedFields }
   } = useForm<forgot>({
-    email: '',
-    code: '',
-    newPassword: '',
-    confirm_password: ''
+    defaultValues: {
+      email: '',
+      code: '',
+      newPassword: '',
+      confirm_password: ''
+    }
   })
 
   type generateEmailCode = {
@@ -68,9 +71,12 @@ export function Forgot() {
       if (result) {
         return result.data
       }
-    } catch (error) {
-      console.log(error)
-      return error?.response?.data
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        return error?.response?.data
+      } else {
+        console.log('Unexpected error', error)
+      }
     } finally {
       setIsLoading(false)
     }
@@ -84,8 +90,11 @@ export function Forgot() {
         return result.data
       }
     } catch (error) {
-      console.log(error)
-      return error?.response?.data
+      if (error instanceof AxiosError) {
+        return error?.response?.data
+      } else {
+        console.log('Unexpected error', error)
+      }
     } finally {
       setIsLoading(false)
     }

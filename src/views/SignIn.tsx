@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
+import { AxiosError } from 'axios'
 import { API } from '@/https/axios.ts'
 
 import BG from '@/assets/images/Login_BG.png'
@@ -34,8 +35,10 @@ export function SignIn() {
     reset,
     formState: { errors }
   } = useForm<SignInFull>({
-    email: '',
-    password: ''
+    defaultValues: {
+      email: '',
+      password: ''
+    }
   })
 
   // user 已經登入 自動導向首頁
@@ -70,7 +73,6 @@ export function SignIn() {
       setIsLoading(true)
       const result = await API.post('/api/v1/user/login', payload)
       if (result) {
-        console.log(result)
         setCookie('FreyjaToken', result.data.token)
         localStorage.setItem(
           'hotelUserData',
@@ -78,9 +80,12 @@ export function SignIn() {
         )
         return result.data
       }
-    } catch (error) {
-      console.log(error)
-      return error?.response?.data
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        return error?.response?.data
+      } else {
+        console.log('Unexpected error', error)
+      }
     } finally {
       setIsLoading(false)
     }
@@ -104,11 +109,8 @@ export function SignIn() {
             expires: expirationDate
           })
         }
-        // setTimeout(() => {
         navigate(`/`)
         return false
-        // }, 3000)
-        // reset()
       } else {
         setAlartContent(result.message)
         reset()
