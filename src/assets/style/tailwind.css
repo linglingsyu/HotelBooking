@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@200;300;400;500;600;700;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base{
+    body {
+        font-family: 'Noto Serif TC', serif;
+        line-height: 1.5;
+        letter-spacing: 2%;
+        @apply bg-neutral-bg
+    }
+    h1,h2,h3,h4,h5,h6{
+        line-height: 1.2;
+        letter-spacing: 5%;
+        @apply font-bold
+    }
+    h1{
+        @apply text-5xl 
+    }
+    h2{
+        @apply text-[40px] 
+    }
+    h3{
+        @apply text-[32px]
+    }
+    h4{
+        @apply text-[28px]
+    }
+    h5{
+        @apply text-2xl
+    }
+    h6{
+        @apply text-xl
+    }
+}
+
+@layer components{
+
+    .btn{
+        @apply px-8 py-4 rounded-lg  transition-all 
+    }
+
+    .btn-primary{
+        @apply   bg-primary-100 text-white
+    }
+
+    .btn-primary:hover{
+        @apply  bg-primary-120
+    }
+
+    .btn-primary:disabled{
+        @apply  bg-neutral-40 text-neutral-60
+    }
+
+    .btn-secondary{
+        @apply bg-white text-primary-100  ring-1 ring-primary-100
+    }
+
+    .btn-secondary:hover{
+        @apply  bg-primary-10 ring-primary-120
+    }
+
+    .btn-secondary:disabled{
+        @apply   text-neutral-60 ring-primary-60
+    }
+
+    .btm-ghost{
+        @apply  text-white px-4
+    }
+
+    .form-control{
+        @apply w-full rounded-lg p-4 bg-white text-neutral-80 border-0 outline-0 ring-0 
+    }
+}

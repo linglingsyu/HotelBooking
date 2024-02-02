@@ -1,0 +1,9 @@
+
+.active {
+  @apply border-primary-100 bg-primary-100 text-white;
+}
+
+.active + span {
+  @apply text-white;
+}
+
