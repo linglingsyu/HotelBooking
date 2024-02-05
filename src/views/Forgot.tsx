@@ -7,6 +7,7 @@ import { AxiosError } from 'axios'
 
 import './SignUp.css'
 import BG from '@/assets/images/Login_BG.png'
+import Deco from '@/assets/images/Deco.png'
 import Alert from '@/components/Alert'
 import Navbar from '@/components/Navbar'
 
@@ -146,7 +147,7 @@ export function Forgot() {
         <div className="w-full lg:w-1/2 relative flex flex-col justify-center items-center -mt-[32px] lg:mt-0">
           <img
             className="w-full absolute left-0 right-0 -top-3.5"
-            src="@/assets/images/Deco.png"
+            src={Deco}
             alt=""
           />
           <div className="w-full lg:w-1/2 mx-auto px-5 lg:px-0 relative z-10">

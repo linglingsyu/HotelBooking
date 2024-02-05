@@ -8,6 +8,7 @@ import { AxiosError } from 'axios'
 import './SignUp.css'
 import zipcode from '@/config/zipcodes.ts'
 import BG from '@/assets/images/Login_BG.png'
+import Deco from '@/assets/images/Deco.png'
 import Alert from '@/components/Alert'
 import Navbar from '@/components/Navbar'
 
@@ -88,7 +89,7 @@ export function SignUp() {
     handleSubmit,
     watch,
     trigger,
-    reset,
+    setValue,
     formState: { errors }
   } = useForm<SignUp>({
     defaultValues: {
@@ -130,8 +131,10 @@ export function SignUp() {
   const onSubmit: SubmitHandler<SignUp> = async (data) => {
     setAlartContent('')
     const isFormValid = await trigger()
+
     if (isFormValid) {
       const birthday = `${data.birthday_year}/${data.birthday_month}/${data.birthday_day}`
+
       const zip = zipcode.find(
         (z) => z.city === data.address.city && z.county === data.address.county
       )
@@ -149,13 +152,9 @@ export function SignUp() {
           }
         }
         const result = await signUpHandler(payload)
-        if (result.status) {
-          // 註冊成功
-          // setTimeout(() => {
-          navigate(`/signin`)
 
-          // }, 3000)
-          // reset()
+        if (result.status) {
+          navigate(`/signin`)
         } else {
           setAlartContent(result.message)
         }
@@ -171,22 +170,19 @@ export function SignUp() {
       const List = zipcode.filter((code) => code.city === '臺北市')
       const countyList = new Set([...List.map((code) => code.county)])
       setcountyList(Array.from(countyList))
-
-      reset({
-        address: {
-          county: '中正區'
-        }
-      })
     })()
   }, [])
 
   // 在這裡監聽 'city' 欄位的變化
   const city = watch('address.city')
+
   useEffect(() => {
     ;(() => {
       const List = zipcode.filter((code) => code.city === city)
       const countyList = new Set([...List.map((code) => code.county)])
-      setcountyList(Array.from(countyList))
+      const result = Array.from(countyList)
+      setcountyList(result)
+      setValue('address.county', result[0])
     })()
   }, [city])
 
@@ -207,7 +203,7 @@ export function SignUp() {
         <div className="w-full lg:w-1/2 relative flex flex-col justify-center items-center -mt-[32px] lg:mt-0">
           <img
             className="w-full absolute left-0 right-0 -top-3.5"
-            src="@/assets/images/Deco.png"
+            src={Deco}
             alt=""
           />
           <div className="w-full lg:w-1/2 mx-auto px-5 lg:px-0 relative z-10">

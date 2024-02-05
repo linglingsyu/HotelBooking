@@ -7,6 +7,7 @@ import { AxiosError } from 'axios'
 import { API } from '@/https/axios.ts'
 
 import BG from '@/assets/images/Login_BG.png'
+import Deco from '@/assets/images/Deco.png'
 import Alert from '@/components/Alert'
 import Navbar from '@/components/Navbar'
 
@@ -128,7 +129,7 @@ export function SignIn() {
         <div className="w-full lg:w-1/2 relative flex flex-col justify-center items-center lg:-mt-[120px]">
           <img
             className="w-full lg:absolute left-0 right-0 lg:top-[120px] lg:translate-y-[45px]"
-            src="@/assets/images/Deco.png"
+            src={Deco}
             alt=""
           />
           <div className="w-full lg:w-1/2 mx-auto px-5 lg:px-0 relative z-10">
