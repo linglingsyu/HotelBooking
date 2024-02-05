@@ -37,7 +37,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="text-white ">這是首頁！！</div>
+      <div className="text-white ">這是首頁！！！</div>
       <hr />
       <div className="text-white ">
         {userData ? (
