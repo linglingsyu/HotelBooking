@@ -163,7 +163,7 @@ export function SignUp() {
   }
 
   useEffect(() => {
-    ;(() => {
+    (() => {
       const cityList = new Set([...zipcode.map((code) => code.city)])
       setcityList(Array.from(cityList))
 
@@ -177,7 +177,7 @@ export function SignUp() {
   const city = watch('address.city')
 
   useEffect(() => {
-    ;(() => {
+    (() => {
       const List = zipcode.filter((code) => code.city === city)
       const countyList = new Set([...List.map((code) => code.county)])
       const result = Array.from(countyList)
